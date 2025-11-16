@@ -18,7 +18,7 @@ export default function Home() {
             <School className="h-8 w-8 text-green-700" />
             <div>
               <h1 className="text-xl font-bold text-green-700">Ghana Excellence School</h1>
-              <p className="text-xs text-muted-foreground">Empowering Future Leaders</p>
+              <p className="text-xs text-muted-foreground">Information Management System</p>
             </div>
           </div>
           
@@ -29,7 +29,7 @@ export default function Home() {
               </Button>
             ) : user ? (
               <Button asChild>
-                <Link href="/dashboard">Go to Dashboard</Link>
+                <Link href="/admin/dashboard">Go to Dashboard</Link>
               </Button>
             ) : (
               <>
@@ -63,11 +63,11 @@ export default function Home() {
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="mx-auto max-w-3xl space-y-6">
           <h2 className="text-5xl font-bold text-gray-900">
-            Welcome to Ghana Excellence School
+            School Information Management System
           </h2>
           <p className="text-xl text-gray-600">
-            A comprehensive school management system designed for Ghanaian schools. 
-            Managing students, teachers, grades, and attendance with excellence.
+            A comprehensive information management system for Ghanaian schools. 
+            Efficiently manage student records, teacher information, classes, grades, and attendance data.
           </p>
           <div className="flex justify-center gap-4">
             {isConfigured ? (
@@ -90,14 +90,14 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
-        <h3 className="text-3xl font-bold text-center mb-12">Our Features</h3>
+        <h3 className="text-3xl font-bold text-center mb-12">Management Features</h3>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
               <GraduationCap className="h-12 w-12 text-green-600 mb-2" />
-              <CardTitle>Student Management</CardTitle>
+              <CardTitle>Student Records</CardTitle>
               <CardDescription>
-                Comprehensive student enrollment, profile management, and academic tracking
+                Comprehensive student enrollment, profile management, and academic data tracking
               </CardDescription>
             </CardHeader>
           </Card>
@@ -105,9 +105,9 @@ export default function Home() {
           <Card>
             <CardHeader>
               <Users className="h-12 w-12 text-blue-600 mb-2" />
-              <CardTitle>Teacher Portal</CardTitle>
+              <CardTitle>Teacher Information</CardTitle>
               <CardDescription>
-                Easy grade entry, attendance marking, and assignment posting for teachers
+                Manage teacher profiles, subject assignments, and class allocations
               </CardDescription>
             </CardHeader>
           </Card>
@@ -117,7 +117,7 @@ export default function Home() {
               <BookOpen className="h-12 w-12 text-purple-600 mb-2" />
               <CardTitle>Class Management</CardTitle>
               <CardDescription>
-                Organize classes, assign teachers, and manage course schedules efficiently
+                Organize classes, course schedules, and teacher-class assignments
               </CardDescription>
             </CardHeader>
           </Card>
@@ -127,7 +127,7 @@ export default function Home() {
               <Award className="h-12 w-12 text-yellow-600 mb-2" />
               <CardTitle>Grades & Reports</CardTitle>
               <CardDescription>
-                Track academic performance with detailed grade reports and analytics
+                Record and track academic performance with detailed grade management
               </CardDescription>
             </CardHeader>
           </Card>
@@ -135,9 +135,9 @@ export default function Home() {
           <Card>
             <CardHeader>
               <TrendingUp className="h-12 w-12 text-red-600 mb-2" />
-              <CardTitle>Attendance Tracking</CardTitle>
+              <CardTitle>Attendance Records</CardTitle>
               <CardDescription>
-                Monitor student attendance with real-time updates and reports
+                Monitor and manage student attendance with comprehensive tracking
               </CardDescription>
             </CardHeader>
           </Card>
@@ -145,9 +145,9 @@ export default function Home() {
           <Card>
             <CardHeader>
               <School className="h-12 w-12 text-green-600 mb-2" />
-              <CardTitle>Parent Access</CardTitle>
+              <CardTitle>Data Analytics</CardTitle>
               <CardDescription>
-                Keep parents informed with access to their children's academic progress
+                Generate reports and insights from your school's information
               </CardDescription>
             </CardHeader>
           </Card>
@@ -232,7 +232,7 @@ export default function Home() {
               <School className="h-6 w-6 text-green-700" />
               <div>
                 <p className="font-semibold text-green-700">Ghana Excellence School</p>
-                <p className="text-xs text-muted-foreground">Quality Education for All</p>
+                <p className="text-xs text-muted-foreground">Information Management System</p>
               </div>
             </div>
             <div className="text-sm text-muted-foreground">

@@ -14,15 +14,15 @@ export default function AdminDashboard() {
   const { userProfile } = useAuth();
 
   return (
-    <ProtectedRoute allowedRoles={['admin']}>
+    <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
         <Navigation />
         
         <div className="container mx-auto p-6">
           <div className="mb-6">
-            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            <h1 className="text-3xl font-bold">Information Management Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome back, {userProfile?.firstName}! Manage your school efficiently.
+              Welcome back, {userProfile?.firstName}! Manage school information efficiently.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">0</div>
-                <p className="text-xs text-muted-foreground">Enrolled students</p>
+                <p className="text-xs text-muted-foreground">Student records</p>
               </CardContent>
             </Card>
 
@@ -45,7 +45,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">0</div>
-                <p className="text-xs text-muted-foreground">Active teachers</p>
+                <p className="text-xs text-muted-foreground">Teacher records</p>
               </CardContent>
             </Card>
 
@@ -56,7 +56,7 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">0</div>
-                <p className="text-xs text-muted-foreground">Active classes</p>
+                <p className="text-xs text-muted-foreground">Class records</p>
               </CardContent>
             </Card>
 

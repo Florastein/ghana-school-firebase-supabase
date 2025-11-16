@@ -25,7 +25,7 @@ export default function LoginPage() {
 
     try {
       await signIn(email, password);
-      router.push('/dashboard');
+      router.push('/admin/dashboard');
     } catch (err: any) {
       setError(err.message || 'Failed to sign in');
     } finally {
@@ -39,7 +39,7 @@ export default function LoginPage() {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">
-            Sign in to your school account
+            Sign in to information management system
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -55,7 +55,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="student@school.edu.gh"
+                placeholder="admin@school.edu.gh"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

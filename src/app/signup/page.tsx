@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useAuth, UserRole } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function SignUpPage() {
   const [formData, setFormData] = useState({
@@ -19,7 +18,6 @@ export default function SignUpPage() {
     firstName: '',
     lastName: '',
     phoneNumber: '',
-    role: '' as UserRole | '',
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,11 +33,6 @@ export default function SignUpPage() {
       return;
     }
 
-    if (!formData.role) {
-      setError('Please select a role');
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -48,9 +41,8 @@ export default function SignUpPage() {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
-        role: formData.role as UserRole,
       });
-      router.push('/dashboard');
+      router.push('/admin/dashboard');
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
     } finally {
@@ -64,7 +56,7 @@ export default function SignUpPage() {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
           <CardDescription className="text-center">
-            Register for school management system
+            Register for information management system
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -119,21 +111,6 @@ export default function SignUpPage() {
                 value={formData.phoneNumber}
                 onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="role">Role</Label>
-              <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value as UserRole })}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="student">Student</SelectItem>
-                  <SelectItem value="teacher">Teacher</SelectItem>
-                  <SelectItem value="parent">Parent</SelectItem>
-                  <SelectItem value="admin">Administrator</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
 
             <div className="space-y-2">

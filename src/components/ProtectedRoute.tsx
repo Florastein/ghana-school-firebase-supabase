@@ -1,27 +1,22 @@
 "use client";
 
-import { useAuth, UserRole } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: UserRole[];
 }
 
-export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
-  const { user, userProfile, loading } = useAuth();
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        router.push('/login');
-      } else if (allowedRoles && userProfile && !allowedRoles.includes(userProfile.role)) {
-        router.push('/unauthorized');
-      }
+    if (!loading && !user) {
+      router.push('/login');
     }
-  }, [user, userProfile, loading, allowedRoles, router]);
+  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -31,7 +26,7 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
     );
   }
 
-  if (!user || (allowedRoles && userProfile && !allowedRoles.includes(userProfile.role))) {
+  if (!user) {
     return null;
   }
 

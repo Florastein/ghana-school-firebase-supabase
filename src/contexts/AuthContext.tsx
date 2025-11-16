@@ -11,12 +11,9 @@ import {
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db, isFirebaseConfigured } from '@/lib/firebase';
 
-export type UserRole = 'admin' | 'teacher' | 'student' | 'parent';
-
 interface UserProfile {
   uid: string;
   email: string;
-  role: UserRole;
   firstName: string;
   lastName: string;
   phoneNumber?: string;
@@ -50,7 +47,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
       
       if (user && db) {
-        // Fetch user profile from Firestore
         try {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           if (userDoc.exists()) {
@@ -84,7 +80,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    // Create user profile in Firestore
     const profile: UserProfile = {
       uid: user.uid,
       ...userData,

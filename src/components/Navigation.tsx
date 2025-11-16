@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useAuth } from '@/contexts/AuthContext';
@@ -20,7 +19,7 @@ export default function Navigation() {
     <nav className="border-b bg-white">
       <div className="container mx-auto flex items-center justify-between p-4">
         <Link href="/" className="text-xl font-bold text-green-700">
-          Ghana School System
+          Ghana Excellence School
         </Link>
         
         {user && userProfile ? (
@@ -29,9 +28,6 @@ export default function Navigation() {
               <User className="h-4 w-4" />
               <span className="text-sm font-medium">
                 {userProfile.firstName} {userProfile.lastName}
-              </span>
-              <span className="text-xs text-muted-foreground">
-                ({userProfile.role})
               </span>
             </div>
             <Button onClick={handleSignOut} variant="outline" size="sm">
