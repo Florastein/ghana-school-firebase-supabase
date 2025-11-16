@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap, Users, BookOpen, Award, School, TrendingUp } from 'lucide-react';
+import { GraduationCap, Users, BookOpen, Award, School, TrendingUp, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Home() {
-  const { user } = useAuth();
+  const { user, isConfigured } = useAuth();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-yellow-50 to-red-50">
@@ -23,7 +23,11 @@ export default function Home() {
           </div>
           
           <div className="flex gap-2">
-            {user ? (
+            {!isConfigured ? (
+              <Button variant="secondary" disabled>
+                Setup Required
+              </Button>
+            ) : user ? (
               <Button asChild>
                 <Link href="/dashboard">Go to Dashboard</Link>
               </Button>
@@ -41,6 +45,20 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Configuration Warning Banner */}
+      {!isConfigured && (
+        <div className="bg-yellow-50 border-b border-yellow-200">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex items-center gap-2 text-yellow-800">
+              <AlertCircle className="h-5 w-5" />
+              <p className="text-sm font-medium">
+                Firebase configuration is required. Please set up your Firebase credentials to enable authentication and full functionality.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 text-center">
         <div className="mx-auto max-w-3xl space-y-6">
@@ -52,12 +70,20 @@ export default function Home() {
             Managing students, teachers, grades, and attendance with excellence.
           </p>
           <div className="flex justify-center gap-4">
-            <Button asChild size="lg">
-              <Link href="/signup">Get Started</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/login">Sign In</Link>
-            </Button>
+            {isConfigured ? (
+              <>
+                <Button asChild size="lg">
+                  <Link href="/signup">Get Started</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="/login">Sign In</Link>
+                </Button>
+              </>
+            ) : (
+              <Button size="lg" disabled>
+                Setup Firebase to Get Started
+              </Button>
+            )}
           </div>
         </div>
       </section>

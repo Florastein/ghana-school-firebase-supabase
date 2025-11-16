@@ -9,7 +9,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
+import { auth, db, isFirebaseConfigured } from '@/lib/firebase';
 
 export type UserRole = 'admin' | 'teacher' | 'student' | 'parent';
 
@@ -27,6 +27,7 @@ interface AuthContextType {
   user: User | null;
   userProfile: UserProfile | null;
   loading: boolean;
+  isConfigured: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, userData: Omit<UserProfile, 'uid' | 'createdAt'>) => Promise<void>;
   signOut: () => Promise<void>;
@@ -40,14 +41,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!isFirebaseConfigured || !auth) {
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       
-      if (user) {
+      if (user && db) {
         // Fetch user profile from Firestore
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          setUserProfile(userDoc.data() as UserProfile);
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc.exists()) {
+            setUserProfile(userDoc.data() as UserProfile);
+          }
+        } catch (error) {
+          console.error('Error fetching user profile:', error);
         }
       } else {
         setUserProfile(null);
@@ -60,6 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    if (!auth) throw new Error('Firebase not configured');
     await signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -68,6 +79,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     password: string,
     userData: Omit<UserProfile, 'uid' | 'createdAt'>
   ) => {
+    if (!auth || !db) throw new Error('Firebase not configured');
+    
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
@@ -83,12 +96,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const signOut = async () => {
+    if (!auth) throw new Error('Firebase not configured');
     await firebaseSignOut(auth);
     setUserProfile(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, userProfile, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      userProfile, 
+      loading, 
+      isConfigured: isFirebaseConfigured,
+      signIn, 
+      signUp, 
+      signOut 
+    }}>
       {children}
     </AuthContext.Provider>
   );
